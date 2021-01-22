@@ -8,7 +8,7 @@ exports.signup = async (req, res, next) => {
     const user = await User.create(req.body)
     user.salt = undefined
     user.hashed_password = undefined
-    res.status(201).json(user).send()
+    return res.status(201).json(user).send()
   } catch (err) {
     next(err)
   }
@@ -45,7 +45,7 @@ exports.signin = (req, res, next) => {
 exports.signout = (req, res, next) => {
   try {
     res.clearCookie('allBuildingToken')
-    res.json({ message: 'Signed out' })
+    return res.json({ message: 'Signed out' })
   } catch (err) {
     next(err)
   }
