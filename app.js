@@ -1,5 +1,7 @@
 const express = require('express')
 const userRoutes = require('./routes/user.routes')
+const categoryRoutes = require('./routes/category.routes')
+const photoRoutes = require('./routes/photo.routes')
 const mongodb = require('./mongodb/mongodb.connect')
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
@@ -18,7 +20,9 @@ app.use(cookieParser())
 app.use(experssValidator())
 
 //routes
+app.use('/category', categoryRoutes)
 app.use('/user', userRoutes)
+app.use('/photo', photoRoutes)
 
 app.use((error, req, res, next) => {
   res.status(500).json({ message: error.message })

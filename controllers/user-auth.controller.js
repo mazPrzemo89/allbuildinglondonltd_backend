@@ -1,6 +1,7 @@
 const User = require('../models/user.model')
 const jwt = require('jsonwebtoken')
 const expressJwt = require('express-jwt')
+const crypto = require('crypto')
 
 exports.signup = async (req, res, next) => {
   try {
@@ -79,8 +80,34 @@ exports.requireSignin = expressJwt({
 
 exports.isAdmin = (req, res, next) => {
   if (req.profile.email != 'email@email.com') {
-    return res.status(403).json({ error: 'Unauthorized' }).send()
+    return res.status(403).json({ error: 'Not Admin!' }).send()
   } else {
     next()
+  }
+}
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const { email, newPassword } = req.body
+    let salt
+    await User.findOne({ email }, (err, user) => {
+      salt = user.salt
+    })
+
+    let updated_password = crypto
+      .createHmac('sha1', salt)
+      .update(newPassword)
+      .digest('hex')
+
+    const update = { hashed_password: updated_password }
+
+    await User.findOneAndUpdate({ email: email }, update, {
+      returnOriginal: false,
+      useFindAndModify: false,
+    })
+
+    res.status(200).json('Password changed')
+  } catch (err) {
+    next(err)
   }
 }

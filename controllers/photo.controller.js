@@ -1,7 +1,7 @@
-const fs = require('fs')
 const formidable = require('formidable')
 const _ = require('lodash')
-const Category = require('../models/category.model')
+const fs = require('fs')
+const Photo = require('../models/photo.model')
 
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm()
@@ -12,19 +12,19 @@ exports.create = (req, res) => {
         error: 'Image could not be uploaded',
       })
     }
-    let category = new Category(fields)
-    if (!files.photo) {
+    let photo = new Photo(fields)
+    if (!files.image) {
       return res.status(400).json({
-        error: 'Please add Image',
+        error: 'Image could not be uploaded',
       })
     }
     if (files.image.size > 8000000) {
       return res.status(400).json('Image size must be less than 8Mb')
     }
-    category.photo.data = fs.readFileSync(files.photo.path)
-    category.photo.contentType = files.photo.type
+    photo.image.data = fs.readFileSync(files.image.path)
+    photo.image.contentType = files.image.type
 
-    category.save((err, result) => {
+    photo.save((err, result) => {
       if (err) {
         return res.status(400).json(err)
       }
