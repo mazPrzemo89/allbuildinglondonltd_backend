@@ -42,3 +42,18 @@ exports.confirmComment = async (req, res) => {
     return res.status(200).json(result)
   })
 }
+
+exports.deleteComment = (req, res) => {
+  Comment.findByIdAndRemove(
+    req.body.id,
+    {
+      useFindAndModify: false,
+    },
+    (err, result) => {
+      if (err) {
+        return res.status(400).json('Comment could not be deleted')
+      }
+      return res.status(200).json(result)
+    },
+  )
+}

@@ -69,15 +69,6 @@ exports.requireSignin = expressJwt({
   userProperty: 'auth',
 })
 
-// exports.isAuth = (req, res, next) => {
-//   let user = req.profile && req.auth && req.profile._id == req.auth.id
-//   if (!user) {
-//     return res.status(403).json({ error: 'Unauthorized' })
-//   }
-
-//   next()
-// }
-
 exports.isAdmin = (req, res, next) => {
   if (req.profile.email != 'email@email.com') {
     return res.status(403).json({ error: 'Not Admin!' }).send()
@@ -86,7 +77,7 @@ exports.isAdmin = (req, res, next) => {
   }
 }
 
-exports.resetPassword = async (req, res) => {
+exports.resetPassword = async (req, res, next) => {
   try {
     const { email, newPassword } = req.body
     let salt
@@ -101,13 +92,11 @@ exports.resetPassword = async (req, res) => {
 
     const update = { hashed_password: updated_password }
 
-    await User.findOneAndUpdate({ email: email }, update, {
-      returnOriginal: false,
-      useFindAndModify: false,
-    })
+    await User.findOneAndUpdate({ email: email }, update)
 
     res.status(200).json('Password changed')
   } catch (err) {
+    console.log(err)
     next(err)
   }
 }

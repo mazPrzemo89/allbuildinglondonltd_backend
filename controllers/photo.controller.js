@@ -28,7 +28,22 @@ exports.create = (req, res) => {
       if (err) {
         return res.status(400).json(err)
       }
-      return res.json(result)
+      return res.json.status(201)('Photo added')
     })
   })
+}
+
+exports.deletePhoto = (req, res) => {
+  Photo.findByIdAndRemove(
+    req.body.id,
+    {
+      useFindAndModify: false,
+    },
+    (err, result) => {
+      if (err) {
+        return res.status(400).json('Photo could not be deleted')
+      }
+      return res.status(200).json('Photo deleted')
+    },
+  )
 }

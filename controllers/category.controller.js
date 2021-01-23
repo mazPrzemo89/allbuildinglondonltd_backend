@@ -2,6 +2,7 @@ const fs = require('fs')
 const formidable = require('formidable')
 const _ = require('lodash')
 const Category = require('../models/category.model')
+const Photo = require('../models/photo.model')
 
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm()
@@ -18,7 +19,7 @@ exports.create = (req, res) => {
         error: 'Please add Image',
       })
     }
-    if (files.image.size > 8000000) {
+    if (files.photo.size > 8000000) {
       return res.status(400).json('Image size must be less than 8Mb')
     }
     category.photo.data = fs.readFileSync(files.photo.path)
@@ -28,7 +29,32 @@ exports.create = (req, res) => {
       if (err) {
         return res.status(400).json(err)
       }
-      return res.json(result)
+      return res.json('Category created')
     })
   })
+}
+
+exports.deleteCategory = async (req, res) => {
+  Category.findByIdAndRemove(
+    req.body.id,
+    {
+      useFindAndModify: false,
+    },
+    async (err, result) => {
+      if (err) {
+        return res.status(400).json('Category could not be deleted')
+      } else if (!result) {
+        return res.status(404).json('Category could not be found')
+      }
+
+      await Photo.deleteMany(
+        { category: req.body.id },
+        {
+          useFindAndModify: false,
+        },
+      )
+
+      return res.status(200).json('Category Deleted')
+    },
+  )
 }

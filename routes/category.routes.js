@@ -7,9 +7,10 @@ const {
   userById,
 } = require('../controllers/user-auth.controller')
 
-const { create } = require('../controllers/category.controller')
+const { create, deleteCategory } = require('../controllers/category.controller')
 
 router.post('/create/:userId', userById, requireSignin, isAdmin, create)
+router.delete('/deletecategory/:userId', requireSignin, isAdmin, deleteCategory)
 
 router.param('userId', userById)
 
