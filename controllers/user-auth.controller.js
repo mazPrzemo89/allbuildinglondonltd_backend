@@ -92,7 +92,10 @@ exports.resetPassword = async (req, res, next) => {
 
     const update = { hashed_password: updated_password }
 
-    await User.findOneAndUpdate({ email: email }, update)
+    await User.findOneAndUpdate({ email: email }, update,{
+      returnOriginal: false,
+      useFindAndModify: false,
+    })
 
     res.status(200).json('Password changed')
   } catch (err) {
