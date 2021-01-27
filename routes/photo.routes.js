@@ -7,10 +7,15 @@ const {
   userById,
 } = require('../controllers/user-auth.controller')
 
-const { create, deletePhoto } = require('../controllers/photo.controller')
+const {
+  createPhoto,
+  deletePhoto,
+  photoByCategoryId,
+} = require('../controllers/photo.controller')
 
-router.post('/post/:userId', userById, requireSignin, isAdmin, create)
-router.delete('/deletephoto/:userId', requireSignin, isAdmin, deletePhoto)
+router.post('/post/:userId', userById, requireSignin, isAdmin, createPhoto)
+router.delete('/delete/:userId', requireSignin, isAdmin, deletePhoto)
+router.post('/get', photoByCategoryId)
 
 router.param('userId', userById)
 

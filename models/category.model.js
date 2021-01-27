@@ -8,10 +8,10 @@ const CategorySchema = new mongoose.Schema({
     maxlength: 32,
     unique: true,
   },
-  photo: {
-    data: Buffer,
-    contentType: String,
-  },
+  // image: {
+  //   data: Buffer,
+  //   contentType: String,
+  // },
 })
 
 const Category = mongoose.model('Category', CategorySchema)

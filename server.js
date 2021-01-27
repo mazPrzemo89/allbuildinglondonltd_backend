@@ -1,5 +1,5 @@
-const app = require("./app");
+const app = require('./app')
 
-app.listen(3000, () => {
-  console.log("Server is now running!");
-});
+app.listen(8000, () => {
+  console.log('Server is now running!')
+})

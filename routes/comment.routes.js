@@ -16,10 +16,10 @@ const {
 } = require('../controllers/comment.controller')
 
 router.post('/post', post)
-router.get('/unconfirmed', findUnconfirmed)
+router.post('/unconfirmed/:userId', requireSignin, isAdmin, findUnconfirmed)
 router.get('/confirmed', findConfirmed)
-router.post('/confirmcomment/:userId', requireSignin, isAdmin, confirmComment)
-router.delete('/deletecomment/:userId', requireSignin, isAdmin, deleteComment)
+router.post('/confirm/:userId', requireSignin, isAdmin, confirmComment)
+router.delete('/delete/:userId', requireSignin, isAdmin, deleteComment)
 
 router.param('userId', userById)
 module.exports = router

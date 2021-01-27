@@ -20,7 +20,7 @@ exports.signin = (req, res, next) => {
     User.findOne({ email }, (err, user) => {
       if (err || !user) {
         return res.status(400).json({
-          err: "User dosen't exist",
+          error: "Email and password dosen't match",
         })
       }
 
@@ -92,7 +92,7 @@ exports.resetPassword = async (req, res, next) => {
 
     const update = { hashed_password: updated_password }
 
-    await User.findOneAndUpdate({ email: email }, update,{
+    await User.findOneAndUpdate({ email: email }, update, {
       returnOriginal: false,
       useFindAndModify: false,
     })

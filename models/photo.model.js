@@ -7,9 +7,8 @@ const PhotoSchema = new mongoose.Schema({
     ref: 'Category',
     required: true,
   },
-  image: {
-    data: Buffer,
-    contentType: String,
+  photo: {
+    type: String,
   },
 })
 
