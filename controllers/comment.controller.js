@@ -18,7 +18,7 @@ exports.post = (req, res) => {
 exports.findUnconfirmed = async (req, res) => {
   let comments = await Comment.find({ confirmed: false })
   if (comments.length === 0) {
-    return res.status(200).json('No unconfirmed comments found.')
+    return res.status(200).json([])
   }
   res.status(200).json(comments)
 }
@@ -26,7 +26,7 @@ exports.findUnconfirmed = async (req, res) => {
 exports.findConfirmed = async (req, res) => {
   let comments = await Comment.find({ confirmed: true })
   if (comments.length === 0) {
-    return res.status(200).json('No comments found.')
+    return res.status(200).json([])
   } else {
   }
   res.status(200).json(comments)
