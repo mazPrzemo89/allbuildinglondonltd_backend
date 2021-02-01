@@ -70,3 +70,5 @@ app.get('/*', (req, res) => {
 ```
 
 That will serve all the html from your production build.
+
+Run ``` npm start ``` and you app is up running, enjoy the fireworks!
