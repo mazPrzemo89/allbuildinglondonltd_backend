@@ -69,4 +69,4 @@ app.get('/*', (req, res) => {
 })
 ```
 
-That will serve html from your production build.
+That will serve all the html from your production build.
