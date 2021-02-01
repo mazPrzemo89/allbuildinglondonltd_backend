@@ -37,7 +37,7 @@ The invocation of expressJS library and connecting to the mongoDB database happe
 Server.js file contains only app.listen(port) fucntion invocation which starts the whole server.
 
 
-#Deployment
+# Deployment
 
 To run the app firstly make sure you've got npm and nodejs(at least version 14) installed on yout machine.
 
